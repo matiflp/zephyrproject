@@ -44,8 +44,13 @@ Zephyr application created using West and using T2 topology.
     sudo udevadm control --reload
 
 ## Set Zephyr variables:
+
+``` bash
+
 export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk/zephyr-sdk-0.16.9
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
+
+```
 
 ## T2 Topologie:
 
