@@ -1,7 +1,8 @@
 #include<stdio.h>
+#include <zephyr/sys/printk.h>
 
 int main(void)
 {
-    printf("Hello Wordl!! Board: %s\n", CONFIG_BOARD);
+    printk("Running on %s\n host board\n", CONFIG_BOARD);
     return 0;
 }
