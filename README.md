@@ -48,6 +48,9 @@ export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk/zephyr-sdk-0.16.9
 export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 
 ## T2 Topologie:
+
+``` bash
+
 zephyr-project/
 ├─App
 │    ├─ CMakeLists.txt
@@ -57,20 +60,36 @@ zephyr-project/
 ├─zephyr_3.6.0
 ├─zphyr_3.7.0
 
+```
+
 ### Switch between Zephyr
 
 #### Select zephy v3.6.0
+
+``` bash
+
 cd zephyr-project/zephyr/zephyr_3.6.0
 source zephyr-env.sh
 
+```
+
 #### Select zephy v3.7.0
+
+```bash 
+
 cd zephyr-project/zephyr/zephyr_3.7.0
 source zephyr-env.sh
 
+```
 ## Connecting USB devices - WSL:
+
+``` bash
+
 usbipd list
 usbipd bind --busid 1-2
 usbipd attach --wsl --busid 1-2
 usbipd detach --busid 1-2
+
+```
 
 
