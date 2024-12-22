@@ -93,6 +93,7 @@ zephyrworkspace/
 ├─zephyrproject
 │    ├─ CMakeLists.txt
 │    ├─ west.yml
+│    ├─ prj.conf
 │    ├─ src/
 │    │  ├─ main.c
 
@@ -117,4 +118,43 @@ export ZEPHYR_BASE=~/zephyrworkspace/zephyr
 export ZEPHYR_BASE=~zephyr-project/zephyr-v3.7.0
 
 ```
+
+## Homework task 5
+
+### Steps
+
+1. First enable and modify the options you want using menu/guiconfig
+
+```bash 
+
+west build -b native_posix_64 --build-dir build -t menuconfig
+
+```
+
+2. Then a backup file will be automatically created in build/zephyr/.config.old
+
+```bash 
+
+zephyrworkspace/
+├─zephyrproject
+│    ├─ CMakeLists.txt
+│    ├─ build
+│    │  ├─ zephyr
+│    │  │    ├─ .config
+│    │  │    ├─ .config.old
+│    ├─ west.yml
+│    ├─ prj.conf
+│    ├─ src/
+│    │  ├─ main.c
+
+```
+
+3. Comapare both files using:
+
+```bash 
+
+diff --changed-group-format='%>' --unchanged-group-format='' .config .config.old > mydiff.conf # this command compare .config .config.old and then save the differences between files in mydiff.confi
+
+```
+
 
