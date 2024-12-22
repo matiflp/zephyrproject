@@ -2,7 +2,9 @@
 
 Zephyr application created using West and using T2 topology.
 
-## Create workspace
+## Homework task 2
+
+### Create workspace
 
 1. Update SO
 ``` bash
@@ -13,15 +15,14 @@ Zephyr application created using West and using T2 topology.
 ``` bash
     pip install west # Reset console
 ``` 
-4. Inicializar Workspace
+4. Initialize Workspace
 ``` bash
-    west init -m https://github.com/zephyrproject-rtos/zephyr.git --mr v3.6.0 .
+    west init -m https://github.com/zephyrproject-rtos/zephyr.git --mr v3.6.0 . # For raw workspace that include all modules.
+    west init -l # For custom west.yml file 
 ```
 5. Update West
 ``` bash
-    west update # Install all modules presents in Zephyr/west.yml
-    west update cmsis hal_nordic # Install only cmsis and hal_nordic modules.
-    # Another alternative is to modify west.yaml by deleting all the projects you don't want and run west update
+    west update # Install all modules presents in Zephyr/west.yml or west.yml custom file.
 ```
 7. IMPORTANT: Install nrf command line tools to include j-link segger
 ``` bash
@@ -64,9 +65,7 @@ Zephyr application created using West and using T2 topology.
     sudo cp ~/zephyr-sdk-0.17.0/sysroots/x86_64-pokysdk-linux/usr/share/openocd/contrib/60-openocd.rules /etc/udev/rules.d
     sudo udevadm control --reload
 ```
-
-## Set Zephyr variables:
-
+18. Configure zephyr ariables:
 ``` bash
 
 export ZEPHYR_SDK_INSTALL_DIR=/opt/zephyr-sdk/zephyr-sdk-0.16.9
@@ -74,41 +73,7 @@ export ZEPHYR_TOOLCHAIN_VARIANT=zephyr
 
 ```
 
-## T2 Topologie:
-
-``` bash
-
-zephyr-project/
-├─App
-│    ├─ CMakeLists.txt
-│    ├─ west.yml
-│    ├─ src/
-│    │  ├─ main.c
-├─zephyr_3.6.0
-├─zphyr_3.7.0
-
-```
-
-### Switch between Zephyr versions
-
-#### Select zephy v3.6.0
-
-``` bash
-
-cd zephyr-project/zephyr/zephyr_3.6.0
-source zephyr-env.sh
-
-```
-
-#### Select zephy v3.7.0
-
-```bash 
-
-cd zephyr-project/zephyr/zephyr_3.7.0
-source zephyr-env.sh
-
-```
-## Connecting USB devices - WSL:
+#### Connecting USB devices - WSL:
 
 ``` bash
 
@@ -119,4 +84,37 @@ usbipd detach --busid 1-2
 
 ```
 
+## Homework task 3
+
+#### T2 Topologie:
+``` bash
+
+zephyrworkspace/
+├─zephyrproject
+│    ├─ CMakeLists.txt
+│    ├─ west.yml
+│    ├─ src/
+│    │  ├─ main.c
+
+```
+
+## Homework task 4
+
+### Switch between Zephyr versions
+
+#### Select zephy v3.6.0
+
+``` bash
+
+export ZEPHYR_BASE=~/zephyrworkspace/zephyr
+
+```
+
+#### Select zephy v3.7.0
+
+```bash 
+
+export ZEPHYR_BASE=~zephyr-project/zephyr-v3.7.0
+
+```
 
