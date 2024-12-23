@@ -1,7 +1,9 @@
-
 #include <iostream>
 #include <string>
+#include <zephyr/logging/log.h>
 using namespace std;
+
+LOG_MODULE_REGISTER(my_log_module, CONFIG_ZEPHYR_COURSE_LOG_LEVEL);
 
 int main(void)
 {
@@ -13,5 +15,7 @@ int main(void)
         cout << "Running on " << CONFIG_BOARD << " host board.\n";
     }
 
+    LOG_ERR("LOG_ERR Message: Running on board: %s", CONFIG_BOARD);
+    
     return 0;
 }
