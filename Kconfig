@@ -20,5 +20,9 @@ config BOARD
     default "zephyr_course_board"
     help
       Set a custom board name. This value will override the default board name.
-
+config UART_DEVICE_ENABLED
+    bool "Enable UART Device"
+    default y if SERIAL && UART_ASYNC_API
+    help
+      Enable UART device for the application.
 endmenu
