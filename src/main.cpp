@@ -5,7 +5,7 @@
 #include <zephyr/sys/printk.h>
 using namespace std;
 
-LOG_MODULE_REGISTER(my_log_module, CONFIG_ZEPHYR_COURSE_LOG_LEVEL);
+LOG_MODULE_REGISTER(my_log_module, CONFIG_ZEPHYR_COURSE_LOG_LEVEL_ERR);
 
 #define MY_CONS_INTERFACE DT_ALIAS(my_cons_interface)
 const struct device *uart= DEVICE_DT_GET(MY_CONS_INTERFACE);
@@ -29,7 +29,9 @@ int main(void)
         return 1 ;
 	}
 
-    if(IS_ENABLED(CONFIG_UART_DEVICE_ENABLED)){
+    LOG_ERR("UART_DEVICE_ENBALED: %d", IS_ENABLED(UART_DEVICE_ENABLED));
+
+    if(IS_ENABLED(UART_DEVICE_ENABLED)){
         LOG_ERR("UART device is enabled");
         LOG_ERR("Device current-speed: %d", DT_PROP(MY_CONS_INTERFACE, current_speed));
         LOG_ERR("Device status: %s", DT_PROP(MY_CONS_INTERFACE, status));

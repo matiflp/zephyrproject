@@ -2,19 +2,11 @@
 source "Kconfig.zephyr"
 
 menu "Custom Application Configuration"
+    
+module = ZEPHYR_COURSE
+module-str = zephyr_course
+source "subsys/logging/Kconfig.template.log_config"
 
-config ZEPHYR_COURSE_LOG_LEVEL
-    int "Log Level for the application"
-    default 1
-    range 0 4
-    help
-      Set the log level for the application:
-      - 0: None
-      - 1: Error
-      - 2: Warning
-      - 3: Info
-      - 4: Debug
-      The default is 1 (Error). Only messages of this level or higher will be logged.
 config BOARD
     string # Is invisible since we dont define a prompt
     default "zephyr_course_board"
