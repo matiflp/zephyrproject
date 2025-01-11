@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 3.20.0)
 
-set(CMAKE_CXX_STANDARD 17) # This sets the C++ standard to C++17
-set(CMAKE_CXX_STANDARD_REQUIRED ON) # This makes C++17 a requirement and prevents a "decay" to C++98 when the compiler does not support C++17
-set(CMAKE_CXX_EXTENSIONS OFF) # This disables the use of compiler-specific extensions
+# set(CMAKE_CXX_STANDARD 17) # This sets the C++ standard to C++17
+# set(CMAKE_CXX_STANDARD_REQUIRED ON) # This makes C++17 a requirement and prevents a "decay" to C++98 when the compiler does not support C++17
+# set(CMAKE_CXX_EXTENSIONS OFF) # This disables the use of compiler-specific extensions
 
 find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
 #set(ZEPHYR_PREFER "zephyr" "zephyr-v3.7.0") #Zephyr preference list
