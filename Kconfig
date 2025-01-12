@@ -1,0 +1,22 @@
+
+source "Kconfig.zephyr"
+
+menu "Custom Application Configuration"
+    
+module = ZEPHYR_COURSE
+module-str = zephyr_course
+source "subsys/logging/Kconfig.template.log_config"
+
+config BOARD
+    string # Is invisible since we dont define a prompt
+    default "zephyr_course_board"
+    help
+      Set a custom board name. This value will override the default board name.
+config UART_DEVICE_STATUS
+    bool "UART Status"
+    default $(dt_node_str_prop_equals,/soc/uart@40002000,status,okay)
+    help
+      UART device status.
+
+endmenu
+
