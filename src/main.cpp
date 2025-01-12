@@ -29,7 +29,7 @@ int main(void)
         return 1 ;
 	}
 
-    if(IS_ENABLED(CONFIG_UART_DEVICE_STATUS)){
+    if(CONFIG_UART_DEVICE_STATUS == "y"){
         LOG_ERR("UART device is enabled");
         LOG_ERR("Device current-speed: %d", DT_PROP(MY_CONS_INTERFACE, current_speed));
         LOG_ERR("Device status: %s", DT_PROP(MY_CONS_INTERFACE, status));
