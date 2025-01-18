@@ -1,0 +1,8 @@
+description: Custom bindings for zephyr course
+
+compatible: "zephyr-course-binding"
+
+properties:
+  negative-value:
+    type: int
+    required: false

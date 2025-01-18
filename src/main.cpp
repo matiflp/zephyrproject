@@ -10,6 +10,8 @@ LOG_MODULE_REGISTER(my_log_module, CONFIG_ZEPHYR_COURSE_LOG_LEVEL_ERR);
 #define MY_CONS_INTERFACE DT_ALIAS(my_cons_interface)
 const struct device *uart= DEVICE_DT_GET(MY_CONS_INTERFACE);
 
+#define ZEPHYR_COURSE_NODE DT_NODELABEL(zephyr_course_node)
+
 int main(void)
 {
     constexpr bool is_native_posix = (CONFIG_BOARD == "native_posix_64");
@@ -24,6 +26,7 @@ int main(void)
     LOG_ERR("LOG_ERR Message: Running on board: %s", CONFIG_BOARD);
 
     // ======================================
+
     if (!device_is_ready(uart)){
         printk("UART device not ready\r\n");
         return 1 ;
@@ -37,6 +40,11 @@ int main(void)
     }else{
         LOG_ERR("UART device is not enabled");
     }
+
+    // ======================================
+
+    int32_t negative_value = DT_PROP(ZEPHYR_COURSE_NODE, negative_value);
+    LOG_ERR("negative-value prop value: %d", negative_value);
 
     return 0;
 }

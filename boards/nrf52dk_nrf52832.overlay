@@ -2,6 +2,11 @@
     aliases {
         my-cons-interface = &uart0;
     };
+
+    zephyr_course_node: zephyr_course_node {
+        compatible = "zephyr-course-binding";
+        negative-value = <(0xFFFFFFE2)>; // or <(-30)>;
+    };
 };
 
 &uart0 {
