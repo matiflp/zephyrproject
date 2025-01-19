@@ -1,8 +1,13 @@
 #include <iostream>
 #include <string>
-#include <zephyr/logging/log.h>
+#include <zephyr/device.h>
+#include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/uart.h>
+#include <zephyr/input/input.h>
+#include <zephyr/kernel.h>
+#include <zephyr/logging/log.h>
 #include <zephyr/sys/printk.h>
+
 using namespace std;
 
 LOG_MODULE_REGISTER(my_log_module, CONFIG_ZEPHYR_COURSE_LOG_LEVEL_ERR);
@@ -11,6 +16,71 @@ LOG_MODULE_REGISTER(my_log_module, CONFIG_ZEPHYR_COURSE_LOG_LEVEL_ERR);
 const struct device *uart= DEVICE_DT_GET(MY_CONS_INTERFACE);
 
 #define ZEPHYR_COURSE_NODE DT_NODELABEL(zephyr_course_node)
+
+#define SLEEP_TIME_MS 100
+
+static const struct device *const longpress_dev = DEVICE_DT_GET(
+		DT_NODELABEL(longpress));
+
+#define LED0_NODE DT_ALIAS(led0)
+#define LED1_NODE DT_ALIAS(led1)
+#define LED2_NODE DT_ALIAS(led2)
+static const struct gpio_dt_spec led0 = GPIO_DT_SPEC_GET(LED0_NODE, gpios);
+static const struct gpio_dt_spec led1 = GPIO_DT_SPEC_GET(LED1_NODE, gpios);
+static const struct gpio_dt_spec led2 = GPIO_DT_SPEC_GET(LED2_NODE, gpios);
+
+#define SW0_NODE DT_ALIAS(sw0) 
+#define SW1_NODE DT_ALIAS(sw1) 
+#define SW2_NODE DT_ALIAS(sw2) 
+static const struct gpio_dt_spec button0 = GPIO_DT_SPEC_GET(SW0_NODE, gpios);
+static const struct gpio_dt_spec button1 = GPIO_DT_SPEC_GET(SW1_NODE, gpios);
+static const struct gpio_dt_spec button2 = GPIO_DT_SPEC_GET(SW2_NODE, gpios);
+
+static void input_event_handler(struct input_event *evt)
+{
+    // Print event output data
+    LOG_ERR("input event: dev=%-16s %3s type=%2x code=%3d value=%d",
+		evt->dev ? evt->dev->name : "NULL",
+		evt->sync ? "SYN" : "",
+		evt->type,
+		evt->code,
+		evt->value);
+
+    if (evt->value == 1)
+    {
+        switch (evt->code) {
+
+            // release before two second
+            case INPUT_KEY_A:
+                gpio_pin_toggle_dt(&led0);
+                LOG_ERR("INPUT_KEY_A\n");
+                break;
+            case INPUT_KEY_B:
+                gpio_pin_toggle_dt(&led1);
+                LOG_ERR("INPUT_KEY_B\n");
+                break;
+            case INPUT_KEY_C:
+                gpio_pin_toggle_dt(&led2);
+                LOG_ERR("INPUT_KEY_C\n");
+                break;
+
+            // hold for more than two second
+            case INPUT_KEY_X:
+                gpio_pin_toggle_dt(&led0);
+                LOG_ERR("INPUT_KEY_X\n");
+                break;
+            case INPUT_KEY_Y:
+                gpio_pin_toggle_dt(&led1);
+                LOG_ERR("INPUT_KEY_Y\n");
+                break;
+            case INPUT_KEY_Z:
+                gpio_pin_toggle_dt(&led2);
+                LOG_ERR("INPUT_KEY_Z\n");
+                break;
+        }
+    }
+}
+INPUT_CALLBACK_DEFINE(longpress_dev, input_event_handler);
 
 int main(void)
 {
@@ -45,6 +115,25 @@ int main(void)
 
     int32_t negative_value = DT_PROP(ZEPHYR_COURSE_NODE, negative_value);
     LOG_ERR("negative-value prop value: %d", negative_value);
+
+    // ======================================
+
+	if (!device_is_ready(button0.port)) {
+        LOG_ERR("Port device not ready\r\n");
+		return -1;
+	}
+
+    gpio_pin_configure_dt(&led0, GPIO_OUTPUT_INACTIVE);
+    gpio_pin_configure_dt(&led1, GPIO_OUTPUT_INACTIVE);
+    gpio_pin_configure_dt(&led2, GPIO_OUTPUT_INACTIVE);
+
+    gpio_pin_configure_dt(&button0, GPIO_INPUT);
+    gpio_pin_configure_dt(&button1, GPIO_INPUT);
+    gpio_pin_configure_dt(&button2, GPIO_INPUT);
+
+    while (1) {
+        k_msleep(SLEEP_TIME_MS);
+    }
 
     return 0;
 }
