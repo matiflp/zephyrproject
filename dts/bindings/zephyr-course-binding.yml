@@ -6,3 +6,7 @@ properties:
   negative-value:
     type: int
     required: false
+
+  negative-value-64-bits:
+    type: array
+    required: false

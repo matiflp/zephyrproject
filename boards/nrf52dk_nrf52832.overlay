@@ -1,21 +1,39 @@
-#include <zephyr/dt-bindings/input/input-event-codes.h>
+#include "../dts/bindings/input/input-event-codes.h"
 
 / {
     aliases {
         my-cons-interface = &uart0;
     };
 
+    // Redefinition of buttons
+    buttons: buttons {
+		compatible = "gpio-keys";
+		button0: button_0 {
+			label = "Push button switch 0";
+			zephyr,code = <BUTTON_0>;
+		};
+		button1: button_1 {
+			label = "Push button switch 1";
+			zephyr,code = <BUTTON_1>;
+		};
+		button2: button_2 {
+			label = "Push button switch 2";
+			zephyr,code = <BUTTON_2>;
+		};
+	};
+
     zephyr_course_node: zephyr_course_node {
         compatible = "zephyr-course-binding";
         negative-value = <(0xFFFFFFE2)>; // or <(-30)>;
+        negative-value-64-bits = <0xFFFFFFFF 0xFFFFFFE2>; // or <(-30)>;
     };
 
     longpress: longpress {
         compatible = "zephyr,input-longpress";
-        input = <&{/buttons}>;
-        input-codes = <INPUT_KEY_0>, <INPUT_KEY_1>, <INPUT_KEY_2>;
-        short-codes = <INPUT_KEY_A>, <INPUT_KEY_B>, <INPUT_KEY_C>;
-        long-codes = <INPUT_KEY_X>, <INPUT_KEY_Y>, <INPUT_KEY_Z>;
+        input = <&buttons>;
+        input-codes = <BUTTON_0>, <BUTTON_1>, <BUTTON_2>;
+        short-codes = <KEY_A>, <KEY_B>, <KEY_C>;
+        long-codes = <KEY_X>, <KEY_Y>, <KEY_Z>;
         long-delay-ms = <2000>;
     };
 };

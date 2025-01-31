@@ -113,8 +113,15 @@ int main(void)
 
     // ======================================
 
+    // 32 bits
     int32_t negative_value = DT_PROP(ZEPHYR_COURSE_NODE, negative_value);
     LOG_ERR("negative-value prop value: %d", negative_value);
+
+    // 64 bits
+    int32_t negative_value_64_bits_high = DT_PROP_BY_IDX(ZEPHYR_COURSE_NODE, negative_value_64_bits, 0);
+    uint32_t negative_value_64_bits_low  = DT_PROP_BY_IDX(ZEPHYR_COURSE_NODE, negative_value_64_bits, 1);
+    int64_t full_value = (static_cast<int64_t>(negative_value_64_bits_high) << 32) | negative_value_64_bits_low;
+    LOG_ERR("Full value (64-bit): %lld", full_value);
 
     // ======================================
 
