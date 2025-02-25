@@ -1,4 +1,3 @@
-
 source "Kconfig.zephyr"
 
 menu "Custom Application Configuration"

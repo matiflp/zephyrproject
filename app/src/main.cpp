@@ -8,6 +8,8 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/printk.h>
 
+#include "nrfx_temp.h"
+
 using namespace std;
 
 LOG_MODULE_REGISTER(my_log_module, CONFIG_ZEPHYR_COURSE_LOG_LEVEL_ERR);
@@ -137,6 +139,28 @@ int main(void)
     gpio_pin_configure_dt(&button0, GPIO_INPUT);
     gpio_pin_configure_dt(&button1, GPIO_INPUT);
     gpio_pin_configure_dt(&button2, GPIO_INPUT);
+
+    // ======================================
+
+    nrfx_err_t status;
+    (void)status;
+
+    nrfx_temp_config_t config = NRFX_TEMP_DEFAULT_CONFIG;
+    status = nrfx_temp_init(&config, NULL);
+    NRFX_ASSERT(status == NRFX_SUCCESS);
+
+    status = nrfx_temp_measure();
+    NRFX_ASSERT(status == NRFX_SUCCESS);
+
+    int32_t temperature = nrfx_temp_result_get();
+    int32_t kelvin_temperature = nrfx_temp_calculate(temperature);
+
+    LOG_ERR("Get value: %d [K]", kelvin_temperature);
+
+    int32_t whole_kelvin = kelvin_temperature / 100;
+    uint8_t fraction_kelvin = NRFX_ABS(kelvin_temperature % 100);
+
+    LOG_ERR("Measured temperature: %d.%02u [K]", whole_kelvin, fraction_kelvin);
 
     while (1) {
         k_msleep(SLEEP_TIME_MS);

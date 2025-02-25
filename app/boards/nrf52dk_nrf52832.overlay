@@ -38,6 +38,10 @@
     };
 };
 
+&temp {
+    status = "okay";
+};
+
 &uart0 {
     current-speed = <9600>;
 };
