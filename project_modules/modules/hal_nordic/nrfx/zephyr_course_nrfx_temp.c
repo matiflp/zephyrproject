@@ -1,8 +1,5 @@
 #include <zephyr/kernel.h>
 #include <nrfx.h>
-
-#if NRFX_CHECK(NRFX_TEMP_ENABLED)
-
 #include "nrfx_temp.h"
 
 #if !defined(USE_WORKAROUND_FOR_TEMP_OFFSET_ANOMALY) && defined(NRF51)
@@ -126,4 +123,3 @@ void nrfx_temp_irq_handler(void)
     m_data_handler(raw_temp);
 }
 
-#endif // NRFX_CHECK(NRFX_TEMP_ENABLED)
