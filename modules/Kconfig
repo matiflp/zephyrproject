@@ -1,5 +1,0 @@
-menu "Device Modules"
-
-rsource "modules/hal_nordic/nrfx/Kconfig"
-
-endmenu
