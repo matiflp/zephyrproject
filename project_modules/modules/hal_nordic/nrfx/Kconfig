@@ -1,2 +1,0 @@
-config ZEPHYR_COURSE_TEMP
-	bool "Enable nRFx temperature sensor"
