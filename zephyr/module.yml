@@ -1,4 +1,7 @@
+name: mycoursemodule
 build:
   depends:
       - hal_nordic
   cmake: .
+  settings:
+    dts_root: .

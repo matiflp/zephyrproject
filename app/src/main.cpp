@@ -8,7 +8,8 @@
 #include <zephyr/logging/log.h>
 #include <zephyr/sys/printk.h>
 
-#include "nrfx_temp.h"
+#include <nrfx_temp.h>
+#include <blinker.h>
 
 using namespace std;
 
@@ -86,7 +87,7 @@ INPUT_CALLBACK_DEFINE(longpress_dev, input_event_handler);
 
 int main(void)
 {
-    constexpr bool is_native_posix = (CONFIG_BOARD == "native_posix_64");
+    constexpr bool is_native_posix = (strcmp(CONFIG_BOARD, "native_posix_64") == 0);
     if (is_native_posix) {
        LOG_ERR("The application is running on the native_posix_64 host board\n");
     } else {
@@ -104,7 +105,7 @@ int main(void)
         return 1 ;
 	}
 
-    if(CONFIG_UART_DEVICE_STATUS == "y"){
+    if(strcmp(CONFIG_UART_DEVICE_STATUS,"y") == 0){
         LOG_ERR("UART device is enabled");
         LOG_ERR("Device current-speed: %d", DT_PROP(MY_CONS_INTERFACE, current_speed));
         LOG_ERR("Device status: %s", DT_PROP(MY_CONS_INTERFACE, status));
@@ -161,6 +162,19 @@ int main(void)
     uint8_t fraction_kelvin = NRFX_ABS(kelvin_temperature % 100);
 
     LOG_ERR("Measured temperature: %d.%02u [K]", whole_kelvin, fraction_kelvin);
+
+    // ======================================
+
+    const struct device* blinker = DEVICE_DT_GET(DT_NODELABEL(zephyr_course_node));
+
+    if(!device_is_ready(blinker)) {
+        LOG_ERR("Blinker device not ready\r\n");
+        k_sleep(K_FOREVER);
+    }
+
+    custom_blink_on(blinker, 0);
+    // k_busy_wait(1000);
+    // custom_blink_off(blinker);
 
     while (1) {
         k_msleep(SLEEP_TIME_MS);
