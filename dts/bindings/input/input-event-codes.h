@@ -1,0 +1,9 @@
+#define BUTTON_0 0xb
+#define BUTTON_1 0x2
+#define BUTTON_2 0x3
+#define KEY_A 0x1e
+#define KEY_B 0x30
+#define KEY_C 0x2E
+#define KEY_X 0x2D
+#define KEY_Y 0x15
+#define KEY_Z 0x2C

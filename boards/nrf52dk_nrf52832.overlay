@@ -1,9 +1,0 @@
-/ {
-    aliases {
-        my-cons-interface = &uart0;
-    };
-};
-
-&uart0 {
-    current-speed = <9600>;
-};

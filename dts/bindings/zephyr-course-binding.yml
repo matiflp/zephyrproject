@@ -1,0 +1,29 @@
+description: Custom bindings for zephyr course
+
+compatible: "zephyr-course-binding"
+
+properties:
+  negative-value:
+    type: int
+    required: false
+
+  negative-value-64-bits:
+    type: array
+    required: false
+
+  leds-number:
+    type: array
+    required: false
+    default: [1, 2, 3]
+    description: "Numbers of LEDs to blink"
+
+  intervals:
+    type: array
+    required: false
+    default: [1, 2, 1]
+    description: "a period of LED toggling (in seconds)"
+  
+  interrupt-controller:
+    type: phandle
+    required: false
+    description: "a reference to the device of compatible = gpio,leds"

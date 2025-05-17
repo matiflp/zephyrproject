@@ -1,14 +1,13 @@
-cmake_minimum_required(VERSION 3.20.0)
+add_subdirectory(
+    ${CMAKE_CURRENT_LIST_DIR}/modules/hal_nordic/nrfx
+    ${CMAKE_CURRENT_BINARY_DIR}/zephyr_course_nrfx
+)
 
-# set(CMAKE_CXX_STANDARD 17) # This sets the C++ standard to C++17
-# set(CMAKE_CXX_STANDARD_REQUIRED ON) # This makes C++17 a requirement and prevents a "decay" to C++98 when the compiler does not support C++17
-# set(CMAKE_CXX_EXTENSIONS OFF) # This disables the use of compiler-specific extensions
+zephyr_syscall_header(${ZEPHYR_MYCOURSEMODULE_MODULE_DIR}/include/blinker.h)
 
-find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
-#set(ZEPHYR_PREFER "zephyr" "zephyr-v3.7.0") #Zephyr preference list
-#find_package(Zephyr 3.6.0 REQUIRED HINTS $ENV{ZEPHYR_BASE}) #Define a specific version of Zephyr
-project(zephyrproject)
-# set(KCONFIG_ROOT ${ZEPHYR_BASE}/Kconfig)
-target_sources(app PRIVATE src/main.cpp)
+zephyr_library()
 
-target_link_libraries(app PRIVATE stdc++)
+zephyr_library_sources(drivers/blinker.c)
+zephyr_include_directories(${ZEPHYR_MYCOURSEMODULE_MODULE_DIR}/include)
+
+
