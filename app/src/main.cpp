@@ -39,21 +39,20 @@ static const struct gpio_dt_spec button0 = GPIO_DT_SPEC_GET(SW0_NODE, gpios);
 static const struct gpio_dt_spec button1 = GPIO_DT_SPEC_GET(SW1_NODE, gpios);
 static const struct gpio_dt_spec button2 = GPIO_DT_SPEC_GET(SW2_NODE, gpios);
 
-static void input_event_handler(struct input_event *evt)
+static void input_event_handler(struct input_event *evt, void *user_data)
 {
-    // Print event output data
+    ARG_UNUSED(user_data);  // Si no lo usás
+
     LOG_ERR("input event: dev=%-16s %3s type=%2x code=%3d value=%d",
-		evt->dev ? evt->dev->name : "NULL",
-		evt->sync ? "SYN" : "",
-		evt->type,
-		evt->code,
-		evt->value);
+        evt->dev ? evt->dev->name : "NULL",
+        evt->sync ? "SYN" : "",
+        evt->type,
+        evt->code,
+        evt->value);
 
     if (evt->value == 1)
     {
         switch (evt->code) {
-
-            // release before two second
             case INPUT_KEY_A:
                 gpio_pin_toggle_dt(&led0);
                 LOG_ERR("INPUT_KEY_A\n");
@@ -66,8 +65,6 @@ static void input_event_handler(struct input_event *evt)
                 gpio_pin_toggle_dt(&led2);
                 LOG_ERR("INPUT_KEY_C\n");
                 break;
-
-            // hold for more than two second
             case INPUT_KEY_X:
                 gpio_pin_toggle_dt(&led0);
                 LOG_ERR("INPUT_KEY_X\n");
@@ -83,7 +80,8 @@ static void input_event_handler(struct input_event *evt)
         }
     }
 }
-INPUT_CALLBACK_DEFINE(longpress_dev, input_event_handler);
+
+INPUT_CALLBACK_DEFINE(longpress_dev, input_event_handler,nullptr);
 
 int main(void)
 {

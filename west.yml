@@ -9,12 +9,12 @@ manifest:
   # Please add items below based on alphabetical order
   projects:
     - name: zephyr
-      revision: v3.6.0
+      revision: v4.2.0
       remote: zephyrproject-rtos
       import:
         name-allowlist:
-          - cmsis   
-          - hal_nordic 
+          - cmsis_6
+          - hal_nordic
 
   self:
     path: app
